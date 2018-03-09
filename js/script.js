@@ -1,5 +1,29 @@
 console.log("Rock Paper Scissors")
 
+
+const container = document.querySelector('#container')
+const instructions = document.createElement("div");
+	instructions.classList.add('content')
+	instructions.textContent ="Select Rock, Paper or Scissors to play"
+
+const rock = document.createElement('button');
+	rock.textContent = "Rock";
+	rock.setAttribute('id', 'rock')
+const paper = document.createElement('button');
+	paper.textContent = "Paper";
+	paper.setAttribute('id', 'paper')
+const scissors = document.createElement('button')
+	scissors.textContent ="Scissors";
+	scissors.setAttribute('id', 'scissors')
+
+console.log(instructions)
+container.appendChild(instructions);
+container.appendChild(rock)
+container.appendChild(paper)
+container.appendChild(scissors)
+
+
+
 let symbols = ["Rock", "Paper", "Scissors"],
 	computer,
 	sum,
@@ -61,22 +85,43 @@ function playRound (playerSelection, computerSelection){
  	}
 }
 
-function game (){
-	//log scores
-	console.log("Player: " + playerScore + " vs " + "Computer: " + compScore)
-	//collect player selection 
-	let player= prompt("Rock, Paper or Scissors");
-	//Run and log round 
-	console.log(playRound(player, computerPlay()))
-}
-// Keep playing game until 5 games have been played
-while ((playerScore+compScore) !== 5){
-	game()
-}
-//Find who is winner
-let winner = (playerScore>compScore)? "You win" : "You Lose"
-//Log last scores 
-console.log("Player: " + playerScore + " vs " + "Computer: " + compScore);
-//Announce winner
-console.log(winner);
+
+
+let btn = document.querySelectorAll('button');
+//log scores
+const score = document.createElement("div");
+const commentary = document.createElement("div");
+	score.textContent ="Player: " + playerScore + " vs " + "Computer: " + compScore;
+	container.insertBefore(score, rock);
+
+
+btn.forEach((button) => { 
+	button.addEventListener("click", function(e){
+	let player = button.id;
+
+	//Run and log round
+
+	commentary.textContent = playRound(player, computerPlay())
+	container.insertBefore(commentary, rock)
+
+	if (playerScore === 5){
+		score.textContent = "Player Wins you Rock!"
+		rock.disabled = true;
+		paper.disabled = true;
+		scissors.disabled = true;
+		} else if (compScore === 5){
+		score.textContent = "Computer Wins you Suck!"
+		rock.disabled = true;
+		paper.disabled = true;
+		scissors.disabled = true;	
+		} else {score.textContent ="Player: " + playerScore + " vs " + "Computer: " + compScore}
+
+
+		
+		
+
+container.insertBefore(score, commentary)
+})
+})
+
 
